@@ -5,9 +5,6 @@ const mongodb = require('mongodb');
 const { MongoClient } = require("mongodb");
 const fs = require('fs');
 const dotenv = require('dotenv');
-const mongoose = require('mongoose');
-const Grid = require('gridfs-stream');
-const path = require('path');
 
 dotenv.config();
 const client = new MongoClient(process.env.FILE_DB_URI);
@@ -21,13 +18,6 @@ app.use(
 
 app.use(fileUpload());
 app.use(express.json());
-
-app.all('/', function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "X-Requested-With");
-    next()
-  });
-
 
 async function upload_file(filename) {
     mongodb.MongoClient.connect(process.env.FILE_DB_URI, function(error, client) {
@@ -53,7 +43,6 @@ async function get_info() {
     cursor.forEach((doc)=> {
         x.push(doc);
     });
-    // console.log(x);
     await client.close();
 }
 
@@ -92,13 +81,11 @@ var fname = '';
 app.post('/send_id', (req, res) => {
     res.header("Access-Control-Allow-Origin", "*");
     fname = req.body.filename;
-    console.log(fname);
     res.send(fname);
 });
 
 app.get('/download', (req, res) => {
     res.header("Access-Control-Allow-Origin", "*");
-    console.log("chek");
     
     client.connect(function() {
       
