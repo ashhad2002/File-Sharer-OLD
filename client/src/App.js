@@ -41,9 +41,6 @@ class App extends Component {
           <Link to="/">Download</Link> <br/>
           <Link to="/upload">Upload</Link>
         </nav>
-
-        {/* A <Switch> looks through its children <Route>s and
-            renders the first one that matches the current URL. */}
         <Switch>
           <Route path="/upload">
           <div className="App">
@@ -60,9 +57,6 @@ class App extends Component {
     );
   }
 }
-
-// function Upload() {
-// }
 
 function Download() {
     const [Files, setFiles] = useState([]);

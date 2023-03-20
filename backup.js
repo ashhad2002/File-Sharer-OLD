@@ -35,13 +35,11 @@ app.all('/', function(req, res, next) {
         date: Date.now(),
       };
       const result = await Info.insertOne(doc);
-      console.log(`A document was inserted with the _id: ${result.insertedId}`);
       const doc2 = {
         File: file,
         File_Info: result.insertedId,
       };
       const result2 = await F.insertOne(doc2);
-      console.log(`A document was inserted with the _id: ${result2.insertedId}`);
     } finally {
         
       await client.close();
@@ -56,13 +54,6 @@ app.post('/upload', (req, res) => {
   
     const file = req.files.file;
   
-    // file.mv(`${__dirname}/client/public/uploads/${file.name}`, err => {
-    //   if (err) {
-    //     console.error(err);
-    //     return res.status(500).send(err);
-    //   }
-    //   res.json({ fileName: file.name, filePath: `/uploads/${file.name}` });
-    // });
     upload_file(file.name).catch(console.dir);
 });
 
@@ -70,13 +61,7 @@ app.listen(3000, () => {
     console.log("server listening on port 3000");
 });
 
-//app.js used to return:
-{/* <div className="App">
-      <input type="file" onChange={this.fileSelectedHandler}/>
-      <button onClick={this.fileUploadHandler}>Upload</button>
-    </div> */}
-
-    axios.get('http://localhost:3000/download')
+axios.get('http://localhost:3000/download')
     .then((response) => {
       console.log(response);
     });
@@ -85,8 +70,6 @@ app.listen(3000, () => {
         mongodb.MongoClient.connect(process.env.FILE_DB_URI, async function(error, client) {
             const database = client.db('File-Sharing');
             var bucket = new mongodb.GridFSBucket(database);
-            // var bytes = bucket.DownloadAsBytes(ID);
             var bytes = await bucket.DownloadAsBytesAsync(ID);
-            console.log(typeof bytes);
         }); 
     }
