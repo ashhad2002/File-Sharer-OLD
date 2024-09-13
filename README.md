@@ -1,3 +1,5 @@
+# This is the old version of my file sharing project. Please check out the new one [here](https://github.com/ashhad2002/FileSharer)
+
 # File-Sharer
 Application for sharing files. You can upload and then download those images using mongodb from the server, upon which said files are sent to the client side for downloading.
 
